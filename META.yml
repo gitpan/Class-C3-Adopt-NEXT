@@ -2,6 +2,8 @@
 abstract: ~
 author:
   - 'Florian Ragwitz C<rafl@debian.org>'
+build_requires:
+  Test::Exception: 0
 distribution_type: module
 generated_by: 'Module::Install version 0.77'
 license: perl
@@ -18,4 +20,4 @@ requires:
   NEXT: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.01
+version: 0.02
