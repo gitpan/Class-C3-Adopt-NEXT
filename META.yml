@@ -16,8 +16,8 @@ no_index:
     - inc
     - t
 requires:
-  Class::C3: 0
+  MRO::Compat: 0
   NEXT: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.02
+version: 0.03
