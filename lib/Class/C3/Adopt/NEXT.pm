@@ -7,7 +7,7 @@ use NEXT;
 use MRO::Compat;
 use warnings::register;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 {
     my %c3_mro_ok;
@@ -51,6 +51,8 @@ our $VERSION = '0.03';
             goto &next::method if $wanted_class =~ /^NEXT:.*:ACTUAL/;
             goto &maybe::next::method;
         };
+
+        *NEXT::ACTUAL::AUTOLOAD = \&NEXT::AUTOLOAD;
     }
 
     sub unimport {
