@@ -15,6 +15,7 @@ META.yml
 README
 t/basic.t
 t/disable.t
+t/import.t
 t/incompatible.t
 t/lib/C3NT.pm
 t/lib/C3NT_nowarn.pm
