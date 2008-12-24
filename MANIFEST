@@ -22,3 +22,4 @@ t/lib/C3NT_nowarn.pm
 t/nowarn.t
 xt/author/pod.t
 xt/author/pod_spelling.t
+xt/release/meta_yml.t

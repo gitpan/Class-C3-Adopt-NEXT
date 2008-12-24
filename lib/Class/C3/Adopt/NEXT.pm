@@ -7,7 +7,7 @@ use NEXT;
 use MRO::Compat;
 use warnings::register;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 {
     my %c3_mro_ok;
@@ -78,14 +78,20 @@ __END__
 
 =head1 NAME
 
-Class::C3::Adopt::NEXT
+Class::C3::Adopt::NEXT - make NEXT suck less
 
 =head1 SYNOPSIS
 
     package MyApp::Plugin::FooBar;
     #use NEXT;
     use Class::C3::Adopt::NEXT;
-    # or 'use Class::C3::Adopt::NEXT' -no_warn to suppress warning
+    # or 'use Class::C3::Adopt::NEXT -no_warn;' to suppress warnings
+
+    # Or use warnings::register
+    # no warnings 'Class::C3::Adopt::NEXT';
+
+    # Or suppress warnings in a set of modules from one place
+    # no Class::C3::Adopt::NEXT qw/ Module1 Module2 Module3 /;
 
     sub a_method {
         my ($self) = @_;
@@ -118,7 +124,12 @@ method modifiers as appropriate, at whatever pace you're comfortable with.
 This module will warn once for each package using NEXT. It uses
 L<warnings::register>, and so can be disabled like by adding
 C<no warnings 'Class::C3::Adopt::NEXT';> to each package which generates a
-warning.
+warning, or adding C<use Class::C3::Adopt::NEXT -no_warn;>, or disable
+multiple modules at once by saying:
+
+    no Class::C3::Adopt::Next qw/ Module1 Module2 Module3 /;
+
+somewhere before the warnings are first triggered.
 
 =head1 MIGRATING
 
