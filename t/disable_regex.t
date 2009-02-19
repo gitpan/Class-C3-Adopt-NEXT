@@ -9,7 +9,7 @@ use lib "$FindBin::Bin/lib";
 
 use C3NT;
 
-no Class::C3::Adopt::NEXT qw/C3NT::Quux C3NT::Bar C3NT::Foo/;
+no Class::C3::Adopt::NEXT qr/^C3NT::/;
 
 my $obj = C3NT::Quux->new;
 

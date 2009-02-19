@@ -12,6 +12,8 @@ SYNOPSIS
 
         # Or suppress warnings in a set of modules from one place
         # no Class::C3::Adopt::NEXT qw/ Module1 Module2 Module3 /;
+        # Or suppress using a regex
+        # no Class::C3::Adopt::NEXT qr/^Module\d$/;
 
         sub a_method {
             my ($self) = @_;
@@ -47,9 +49,12 @@ WARNINGS
     adding "use Class::C3::Adopt::NEXT -no_warn;", or disable multiple
     modules at once by saying:
 
-        no Class::C3::Adopt::Next qw/ Module1 Module2 Module3 /;
+        no Class::C3::Adopt::NEXT qw/ Module1 Module2 Module3 /;
 
-    somewhere before the warnings are first triggered.
+    somewhere before the warnings are first triggered. You can also setup
+    entire name spaces of modules which will not warn using a regex, e.g.
+
+        no Class::C3::Adopt::NEXT qr/^Module\d$/;
 
 MIGRATING
     There are two main reasons for using NEXT:

@@ -15,11 +15,13 @@ META.yml
 README
 t/basic.t
 t/disable.t
+t/disable_regex.t
 t/import.t
 t/incompatible.t
 t/lib/C3NT.pm
 t/lib/C3NT_nowarn.pm
 t/nowarn.t
+t/warning_package.t
 xt/author/pod.t
 xt/author/pod_spelling.t
 xt/release/meta_yml.t

@@ -5,7 +5,7 @@ author:
 build_requires:
   Test::Exception: 0
 distribution_type: module
-generated_by: 'Module::Install version 0.77'
+generated_by: 'Module::Install version 0.79'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -16,8 +16,9 @@ no_index:
     - inc
     - t
 requires:
+  List::MoreUtils: 0
   MRO::Compat: 0
   NEXT: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.06
+version: 0.07
