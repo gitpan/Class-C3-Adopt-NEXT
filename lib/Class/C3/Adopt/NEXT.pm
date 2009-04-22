@@ -8,7 +8,7 @@ use MRO::Compat;
 use List::MoreUtils qw/none/;
 use warnings::register;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 {
     my %c3_mro_ok;
@@ -182,6 +182,16 @@ You then add C<use mro 'c3'> to the top of a package as you start converting it,
 and gradually replace your calls to C<NEXT::method()> with
 C<maybe::next::method()>, and calls to C<NEXT::ACTUAL::method()> with
 C<next::method()>.
+
+Example:
+
+    $self->NEXT::yourmethodname();
+    becomes
+    $self->maybe::next::method();
+
+    $self->NEXT::ACTUAL::yourmethodname();
+    becomes
+    $self->next::method();
 
 On systems with L<Class::C3::XS> present, this will automatically be used to
 speed up method re-dispatch. If you are running perl version 5.9.5 or greater
