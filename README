@@ -1,0 +1,146 @@
+NAME
+    Class::C3::Adopt::NEXT - make NEXT suck less
+
+SYNOPSIS
+        package MyApp::Plugin::FooBar;
+        #use NEXT;
+        use Class::C3::Adopt::NEXT;
+        # or 'use Class::C3::Adopt::NEXT -no_warn;' to suppress warnings
+
+        # Or use warnings::register
+        # no warnings 'Class::C3::Adopt::NEXT';
+
+        # Or suppress warnings in a set of modules from one place
+        # no Class::C3::Adopt::NEXT qw/ Module1 Module2 Module3 /;
+        # Or suppress using a regex
+        # no Class::C3::Adopt::NEXT qr/^Module\d$/;
+
+        sub a_method {
+            my ($self) = @_;
+            # Do some stuff
+
+            # Re-dispatch method
+            # Note that this will generate a warning the _first_ time the package
+            # uses NEXT unless you un comment the 'no warnings' line above.
+            $self->NEXT::method();
+        }
+
+DESCRIPTION
+    NEXT was a good solution a few years ago, but isn't any more. It's slow,
+    and the order in which it re-dispatches methods appears random at times.
+    It also encourages bad programming practices, as you end up with code to
+    re-dispatch methods when all you really wanted to do was run some code
+    before or after a method fired.
+
+    However, if you have a large application, then weaning yourself off
+    "NEXT" isn't easy.
+
+    This module is intended as a drop-in replacement for NEXT, supporting
+    the same interface, but using Class::C3 to do the hard work. You can
+    then write new code without "NEXT", and migrate individual source files
+    to use "Class::C3" or method modifiers as appropriate, at whatever pace
+    you're comfortable with.
+
+WARNINGS
+    This module will warn once for each package using NEXT. It uses
+    warnings::register, and so can be disabled like by adding "no warnings
+    'Class::C3::Adopt::NEXT';" to each package which generates a warning, or
+    adding "use Class::C3::Adopt::NEXT -no_warn;", or disable multiple
+    modules at once by saying:
+
+        no Class::C3::Adopt::NEXT qw/ Module1 Module2 Module3 /;
+
+    somewhere before the warnings are first triggered. You can also setup
+    entire name spaces of modules which will not warn using a regex, e.g.
+
+        no Class::C3::Adopt::NEXT qr/^Module\d$/;
+
+MIGRATING
+  Current code using NEXT
+    You add "use MRO::Compat" to the top of a package as you start
+    converting it, and gradually replace your calls to "NEXT::method()" with
+    "maybe::next::method()", and calls to "NEXT::ACTUAL::method()" with
+    "next::method()".
+
+    Example:
+
+        sub yourmethod {
+            my $self = shift;
+
+            # $self->NEXT::yourmethod(@_); becomes
+            $self->maybe::next::method();
+        }
+
+        sub othermethod {
+            my $self = shift;
+
+            # $self->NEXT::ACTUAL::yourmethodname(); becomes
+            $self->next::method();
+        }
+
+    On systems with Class::C3::XS present, this will automatically be used
+    to speed up method re-dispatch. If you are running perl version 5.9.5 or
+    greater then the C3 method resolution algorithm is included in perl.
+    Correct use of MRO::Compat as shown above allows your code to be
+    seamlessly forward and backwards compatible, taking advantage of native
+    versions if available, but falling back to using pure perl "Class::C3".
+
+  Writing new code
+    Use Moose and make all of your plugins Moose::Roles, then use method
+    modifiers to wrap methods.
+
+    Example:
+
+        package MyApp::Role::FooBar;
+        use Moose::Role;
+
+        before 'a_method' => sub {
+            my ($self) = @_;
+            # Do some stuff
+        };
+
+        around 'a_method' => sub {
+            my $orig = shift;
+            my $self = shift;
+            # Do some stuff before
+            my $ret = $self->$orig(@_); # Run wrapped method (or not!)
+            # Do some stuff after
+            return $ret;
+        };
+
+        package MyApp;
+        use Moose;
+
+        with 'MyApp::Role::FooBar';
+
+CAVEATS
+    There are some inheritance hierarchies that it is possible to create
+    which cannot be resolved to a simple C3 hierarchy. In that case, this
+    module will fall back to using "NEXT". In this case a warning will be
+    emitted.
+
+    Because calculating the MRO of every class every time "->NEXT::foo" is
+    used from within it is too expensive, runtime manipulations of @ISA are
+    prohibited.
+
+FUNCTIONS
+    This module replaces "NEXT::AUTOLOAD" with it's own version. If warnings
+    are enabled then a warning will be emitted on the first use of "NEXT" by
+    each package.
+
+SEE ALSO
+    MRO::Compat and Class::C3 for method re-dispatch and Moose for method
+    modifiers and roles.
+
+    NEXT for documentation on the functionality you'll be removing.
+
+AUTHORS
+    Florian Ragwitz "rafl@debian.org"
+
+    Tomas Doran "bobtfish@bobtfish.net"
+
+COPYRIGHT AND LICENSE
+    Copyright (c) 2008, 2009 Florian Ragwitz
+
+    You may distribute this code under the same terms as Perl itself.
+
