@@ -2,13 +2,19 @@ use strict;
 use warnings;
 
 package Class::C3::Adopt::NEXT;
+BEGIN {
+  $Class::C3::Adopt::NEXT::AUTHORITY = 'cpan:FLORA';
+}
+BEGIN {
+  $Class::C3::Adopt::NEXT::VERSION = '0.13';
+}
+# ABSTRACT: make NEXT suck less
 
 use NEXT;
 use MRO::Compat;
 use List::MoreUtils qw/none/;
 use warnings::register;
 
-our $VERSION = '0.12';
 
 {
     my %c3_mro_ok;
@@ -83,6 +89,7 @@ our $VERSION = '0.12';
 1;
 
 __END__
+=pod
 
 =head1 NAME
 
@@ -228,16 +235,25 @@ modifiers and L<roles|Moose::Role>.
 
 L<NEXT> for documentation on the functionality you'll be removing.
 
+=begin Pod::Coverage
+
+import
+
+unimport
+
+=end Pod::Coverage
+
 =head1 AUTHORS
 
-Florian Ragwitz C<rafl@debian.org>
-
-Tomas Doran C<bobtfish@bobtfish.net>
+  Florian Ragwitz <rafl@debian.org>
+  Tomas Doran <bobtfish@bobtfish.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (c) 2008, 2009  Florian Ragwitz
+This software is copyright (c) 2010 by Florian Ragwitz.
 
-You may distribute this code under the same terms as Perl itself.
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
+

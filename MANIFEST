@@ -1,18 +1,12 @@
 Changes
-inc/Module/Install.pm
-inc/Module/Install/Base.pm
-inc/Module/Install/Can.pm
-inc/Module/Install/ExtraTests.pm
-inc/Module/Install/Fetch.pm
-inc/Module/Install/Makefile.pm
-inc/Module/Install/Metadata.pm
-inc/Module/Install/Win32.pm
-inc/Module/Install/WriteAll.pm
-lib/Class/C3/Adopt/NEXT.pm
-Makefile.PL
-MANIFEST			This list of files
+LICENSE
+MANIFEST
+META.json
 META.yml
+Makefile.PL
 README
+dist.ini
+lib/Class/C3/Adopt/NEXT.pm
 t/basic.t
 t/disable.t
 t/disable_regex.t
@@ -21,7 +15,6 @@ t/incompatible.t
 t/lib/C3NT.pm
 t/lib/C3NT_nowarn.pm
 t/nowarn.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
 t/warning_package.t
-xt/author/pod.t
-xt/author/pod_spelling.t
-xt/release/meta_yml.t
